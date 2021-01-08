@@ -1,0 +1,67 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+group 'org.generalprogramming.fabulous'
+version '1.0.0'
+
+description = "Vault-like service provider framework for Fabric"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+java {
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'fabulous'
+
+            from components.java
+
+            pom {
+                name = 'Fabulous'
+                description = project.description
+
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://spdx.org/licenses/MIT.html'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'obw'
+                        name = 'offbeatwitch'
+                        email = 'obw@generalprogramming.org'
+                    }
+                }
+
+                scm {
+                    connection = 'scm:git:git://github.com/general-programming/Fabulous.git'
+                    url = 'https://github.com/general-programming/Fabulous'
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            url = 'https://maven.offbeatwit.ch/repository/releases/'
+
+            credentials(PasswordCredentials) {
+                username = project.property('archiva.user')
+                password = project.property('archiva.password')
+            }
+        }
+    }
+}
+
